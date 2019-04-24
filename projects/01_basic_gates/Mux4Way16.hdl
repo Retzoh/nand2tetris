@@ -9,6 +9,14 @@
  *       b if sel == 01
  *       c if sel == 10
  *       d if sel == 11
+ *
+ * use a tree:
+ *
+ *  a    b    c    d
+ *   \  /      \  /
+ * Mux16-ab  Mux16-cd
+ *      \      /
+ *      Mux16-out
  */
 
 CHIP Mux4Way16 {

@@ -9,6 +9,9 @@
  *                            {0, in, 0, 0, 0, 0, 0, 0} if sel == 001
  *                            etc.
  *                            {0, 0, 0, 0, 0, 0, 0, in} if sel == 111
+ *
+ * Same tree architecture as with DMux4Way but with thwo DMux4Way on the lower 
+ * level
  */
 
 CHIP DMux8Way {

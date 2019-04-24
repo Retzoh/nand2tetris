@@ -7,6 +7,10 @@
  * Multiplexor:
  * out = a if sel == 0
  *       b otherwise
+ *
+ * out = or(
+ * and(b, sel),
+ * and(a, not(sel)))
  */
 
 CHIP Mux {

@@ -9,6 +9,7 @@
  *       b if sel == 001
  *       etc.
  *       h if sel == 111
+ * Same as Mux4Way16 but with Mux4Way16 in the upper level
  */
 
 CHIP Mux8Way16 {

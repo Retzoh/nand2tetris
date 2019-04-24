@@ -6,6 +6,8 @@
 /**
  * Not gate:
  * out = not in
+ *
+ * Not(a) = Nand(a, a)
  */
 
 CHIP Not {

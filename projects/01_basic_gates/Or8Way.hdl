@@ -6,6 +6,17 @@
 /**
  * 8-way Or: 
  * out = (in[0] or in[1] or ... or in[7])
+ *
+ * use a tree:
+ *
+ * 0  1  2  3  4  5  6  7
+ *  \/    \/    \/    \/
+ * l2x0  l2x1  l2x2  l2x3
+ *    \  /        \  /
+ *    l4x0        l4x1
+ *       \         /
+ *         \     /
+ *           out
  */
 
 CHIP Or8Way {

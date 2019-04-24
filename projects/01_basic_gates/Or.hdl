@@ -7,6 +7,11 @@
  * Or gate:
  * out = 1 if (a == 1 or b == 1)
  *       0 otherwise
+ *
+ * De Morgan's law:
+ * Not(Or(a, b)) = And(not(a), not(b))
+ * So:
+ * Or(a, b) = not(and(not(a), not(b)))
  */
 
 CHIP Or {
@@ -16,6 +21,5 @@ CHIP Or {
     PARTS:
     Not(in=a, out=nota);
     Not(in=b, out=notb);
-    And(a=nota, b=notb, out=notout);
-    Not(in=notout, out=out);
+    Nand(a=nota, b=notb, out=out);
 }
