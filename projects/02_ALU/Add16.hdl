@@ -6,6 +6,18 @@
 /**
  * Adds two 16-bit values.
  * The most significant carry bit is ignored.
+ *
+ * The bits of same ranks are summed together and the carries are forwarded to 
+ * the next rank:
+ *
+ * ...a2      a1      a0
+ * ...+       +       +
+ * ...b2      b1      b0
+ * ...+       +       +
+ * ...carry1  carry0  0
+ * ---|   ^---|   ^---|
+ * ...v       v       v
+ * ...out2    out1    out0
  */
 
 CHIP Add16 {
