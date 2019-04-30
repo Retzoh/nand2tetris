@@ -1,0 +1,26 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/10/ExpressionLessSquare/Main.jack
+
+/** Expressionless version of projects/10/Square/Main.jack. */
+
+class Statements {
+    function void test_return_void_statement () {return;}
+    function int test_return_int_statement () {return abc;}
+    method Class test_let_statement(){let a=b;}
+    method Class test_let_array_statement(){let a[b]=c;}
+    constructor Statements test_if_statement(){if (a) {let a=b;}}
+    method int test_if_else_statement(){if(a){let a=b;}else{let b=a;}}
+    method int test_whille_statement(){while(true){let a=b;}}
+    method int test_do_function_statement(){do a(b, c);}
+    method int test_do_method_statement(){do a.d(b, c);}
+    method int test_do_static_statement(){do Class.new(b, c);}
+    method int test_multiple_statements(){
+        if(a) {
+            let a=c;
+            let d=e;
+            while(true) {do test();}
+        }
+    }
+}

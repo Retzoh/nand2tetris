@@ -1,0 +1,15 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/10/ExpressionLessSquare/Main.jack
+
+/** Expressionless version of projects/10/Square/Main.jack. */
+
+class SubroutineDec {
+    constructor SubroutineDec constructor_test () {}
+    function void void_function_test () {}
+    method int int_method_test() {}
+    function char char_test() {}
+    function boolean bool_test() {}
+    function Class class_test(){}
+}

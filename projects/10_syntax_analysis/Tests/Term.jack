@@ -1,0 +1,20 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/10/ExpressionLessSquare/Main.jack
+
+/** Expressionless version of projects/10/Square/Main.jack. */
+
+class Term {
+    method int test_integer(){return 2;}
+    method int test_string(){return "dqsflmj qsdfiuga   sqdf";}
+    method int test_keyword(){return true;}
+    method int test_name(){return abc;}
+    method int test_array(){return a[b];}
+    method int test_subroutine(){return a(b);}
+    method int test_a_dot_b(){return a.b(c);}
+    method int test_parenthesis(){return (a.b(c));}
+    method int test_minus(){return -2;}
+    method int test_not(){return ~true;}
+    method int test_complex(){return ~((2*a(b)) - (-2)) * 45 ;}
+}

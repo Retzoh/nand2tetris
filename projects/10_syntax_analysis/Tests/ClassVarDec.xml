@@ -1,0 +1,34 @@
+<class>
+  <keyword> class </keyword>
+  <identifier> ClassVarDec </identifier>
+  <symbol> { </symbol>
+  <classVarDec>
+    <keyword> static </keyword>
+    <keyword> int </keyword>
+    <identifier> i_1 </identifier>
+    <symbol> , </symbol>
+    <identifier> i2 </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> char </keyword>
+    <identifier> c_1 </identifier>
+    <symbol> , </symbol>
+    <identifier> c_2 </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> static </keyword>
+    <keyword> boolean </keyword>
+    <identifier> bool </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> static </keyword>
+    <identifier> ClassVarDec </identifier>
+    <identifier> v </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <symbol> } </symbol>
+</class>

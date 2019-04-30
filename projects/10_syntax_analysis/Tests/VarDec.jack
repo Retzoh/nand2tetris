@@ -1,0 +1,21 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/10/ExpressionLessSquare/Main.jack
+
+/** Expressionless version of projects/10/Square/Main.jack. */
+
+class VarDec {
+    function void test_one_var() {
+        var int i;
+    }
+    method int test_multiple_var() {
+        var boolean b1, b2, b3;
+    }
+    constructor VarDec test_multiple_dec() {
+        var Class c1, c2;
+        var int i3;
+
+        var boolean b4;
+    }
+}

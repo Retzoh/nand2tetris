@@ -1,0 +1,12 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/10/ExpressionLessSquare/Main.jack
+
+/** Expressionless version of projects/10/Square/Main.jack. */
+
+class ParameterList {
+    function void no_param_test() {}
+    method int one_param_test(int a) {}
+    function boolean all_param_test(int i, boolean b, char c, Class C) {}
+}

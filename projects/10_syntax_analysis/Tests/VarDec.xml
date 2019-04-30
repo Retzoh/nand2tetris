@@ -1,0 +1,87 @@
+<class>
+  <keyword> class </keyword>
+  <identifier> VarDec </identifier>
+  <symbol> { </symbol>
+  <subroutineDec>
+    <keyword> function </keyword>
+    <keyword> void </keyword>
+    <identifier> test_one_var </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <varDec>
+        <keyword> var </keyword>
+        <keyword> int </keyword>
+        <identifier> i </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <statements>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> int </keyword>
+    <identifier> test_multiple_var </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <varDec>
+        <keyword> var </keyword>
+        <keyword> boolean </keyword>
+        <identifier> b1 </identifier>
+        <symbol> , </symbol>
+        <identifier> b2 </identifier>
+        <symbol> , </symbol>
+        <identifier> b3 </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <statements>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> constructor </keyword>
+    <identifier> VarDec </identifier>
+    <identifier> test_multiple_dec </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <varDec>
+        <keyword> var </keyword>
+        <identifier> Class </identifier>
+        <identifier> c1 </identifier>
+        <symbol> , </symbol>
+        <identifier> c2 </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <varDec>
+        <keyword> var </keyword>
+        <keyword> int </keyword>
+        <identifier> i3 </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <varDec>
+        <keyword> var </keyword>
+        <keyword> boolean </keyword>
+        <identifier> b4 </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <statements>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <symbol> } </symbol>
+</class>
