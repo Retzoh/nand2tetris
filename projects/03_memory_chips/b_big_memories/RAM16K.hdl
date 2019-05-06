@@ -8,6 +8,21 @@
  * stored at the memory location specified by address. If load==1, then 
  * the in value is loaded into the memory location specified by address 
  * (the loaded value will be emitted to out from the next time step onward).
+ *
+ * We use a double-tree structure to choose the right register to read from /
+ * write to
+ *
+ *                             load
+ *                               |
+ *                             DMux4  <- address_high
+ *                         _/ /  |  \
+ *                       /   /   |    \
+ * in, address_low -> RAM1 RAM2 RAM3 RAM4
+ *                       \_  \   |    /
+ *                          \ \  |  /
+ *                             Mux4   <- address
+ *                               |
+ *                              out
  */
 
 CHIP RAM16K {

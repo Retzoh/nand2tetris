@@ -8,6 +8,21 @@
  * stored at the memory location specified by address. If load==1, then 
  * the in value is loaded into the memory location specified by address 
  * (the loaded value will be emitted to out from the next time step onward).
+ *
+ * We use a double-tree structure to choose the right register to read from / 
+ * write to
+ *
+ *                load
+ *                  |
+ *                DMux8  <- address
+ *            _/ /  |  \
+ *          /   /   |   ...  
+ * in -> Reg1 Reg2 Reg3 ... Reg8
+ *          \_  \   |   ...
+ *             \ \  |  /
+ *                Mux8   <- address
+ *                  | 
+ *                 out
  */
 
 CHIP RAM8 {
@@ -15,7 +30,8 @@ CHIP RAM8 {
     OUT out[16];
 
     PARTS:
-    DMux8Way(in=load ,sel=address ,a=l0 ,b=l1 ,c=l2 ,d=l3 ,e=l4 ,f=l5 ,g=l6 ,h=l7);
+    DMux8Way(in=load, sel=address, a=l0, b=l1, c=l2, d=l3, e=l4, f=l5, g=l6, 
+        h=l7);
     Register(in=in, load=l0, out=out0);
     Register(in=in, load=l1, out=out1);
     Register(in=in, load=l2, out=out2);
@@ -24,5 +40,6 @@ CHIP RAM8 {
     Register(in=in, load=l5, out=out5);
     Register(in=in, load=l6, out=out6);
     Register(in=in, load=l7, out=out7);
-    Mux8Way16(a=out0, b=out1 ,c=out2 ,d=out3 ,e=out4 ,f=out5 ,g=out6 ,h=out7 ,sel=address ,out=out); 
+    Mux8Way16(a=out0, b=out1, c=out2, d=out3, e=out4, f=out5, g=out6, h=out7, 
+        sel=address, out=out); 
 }

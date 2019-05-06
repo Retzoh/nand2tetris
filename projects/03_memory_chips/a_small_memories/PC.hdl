@@ -16,9 +16,12 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
+    // inc
     Inc16(in=prev-state, out=incremented);
     Mux16(a=prev-state,b=incremented,sel=inc,out=inc-state);
+    // load
     Mux16(a=inc-state,b=in,sel=load,out=l-state);
+    // reset
     Mux16(a=l-state ,b=false ,sel=reset ,out=new-state);
     Register(in=new-state,load=true,out=prev-state, out=out); 
 }

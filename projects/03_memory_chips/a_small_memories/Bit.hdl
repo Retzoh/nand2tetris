@@ -7,6 +7,12 @@
  * 1-bit register:
  * If load[t] == 1 then out[t+1] = in[t]
  *                 else out does not change (out[t+1] = out[t])
+ * 
+ * A DFF (D-type Flip Flop) is a clocked gate. Its output at time `t` is equal 
+ * to its input at time t-1.
+ *
+ * Here we use a Mux to switch between looping the DFF on itself (keep the 
+ * memory) or overwrite its intput with `in` (write to memory).
  */
 
 CHIP Bit {
