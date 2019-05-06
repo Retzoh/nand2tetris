@@ -1,0 +1,35 @@
+image: alpine/edge
+sources:
+  - https://git.sr.ht/~retzoh/nand2tetris
+environment:
+  repository_name: nand2tetris
+  git_sr_ht_url: git@git.sr.ht:~retzoh/nand2tetris
+  github_url: git@github.com:Retzoh/nand2tetris.git
+secrets:
+  - ed37ce69-d5be-42df-9b92-41471089d431  # ~/.ssh/known_hosts
+  - 7331599a-5f2d-4b4f-9c92-e0a1483014e3  # ~/.ssh/.build_test_ssh_key
+  - 899472e5-1ec8-4211-a00b-05a0d3eaf775  # ~/.ssh/.github_deploy_ssh_key
+tasks: 
+- deploy_master_github: |
+    ln -sf ~/.ssh/.build_test_ssh_key ~/.ssh/id_rsa
+
+    cd $repository_name
+    git remote set-url origin $git_sr_ht_url
+    lines=`git diff --stat origin/master..HEAD | wc -l`
+    if [ $lines -eq 0 ]
+    then
+
+    echo "pushing to github"
+    git config --global user.email "~retzoh/builds@lists.sr.ht"
+    git config --global user.name "Deploy"
+
+    ln -sf ~/.ssh/.github_deploy_ssh_key ~/.ssh/id_rsa
+    git checkout -B master -t origin/master
+    git remote set-url origin $github_url
+    git push --set-upstream origin master
+
+    else
+
+    echo "Aborting github deployment: HEAD is dirty compared to master."
+
+    fi
