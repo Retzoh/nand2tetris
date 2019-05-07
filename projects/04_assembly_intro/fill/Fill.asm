@@ -3,6 +3,9 @@
 // by Nisan and Schocken, MIT Press.
 // File name: projects/04/Fill.asm
 
+// See https://www.nand2tetris.org/course, project 4 for the hack machine 
+// langage and assembler specifications
+
 // Runs an infinite loop that listens to the keyboard input.
 // When a key is pressed (any key), the program blackens the screen,
 // i.e. writes "black" in every pixel;
@@ -10,20 +13,21 @@
 // When no key is pressed, the program clears the screen, i.e. writes
 // "white" in every pixel;
 // the screen should remain fully clear as long as no key is pressed.
+// The screen consists of 256*512 pixels, mapped to 256*32 16bits words.
 
 // This programm uses the following convention:
 // If a key is pressed on the keyboard
-//   @key==1
+//   @key=1
 // else:
-//   @key==0
+//   @key=0
 // 
 // If the screen is filled
-//   @fill_value==-1
+//   @fill_value=-1
 // else:
-//   @fill_value==0
+//   @fill_value=0
 
 // This way we know that:
-// If @key + @fill_value == 0
+// If @key + @fill_value = 0
 //   we don't need to refresh the screen
 // Else
 //   we have to:
@@ -52,11 +56,11 @@ D;JEQ           // else:
 @key            //   set key to 1
 M=1
 (SKIP) 
-@key          // If key + fill_value == 0 -> skip fill screen
+@key          // If key + fill_value = 0 -> skip fill screen
 D=M              // D = key
 @fill_value
 D=D+M            // D = key + fill_value
-@MAIN            // If D == 0
+@MAIN            // If D = 0
 D;JEQ              // continue (GOTO MAIN)
 @key          // Else fill_value = -key 
 D=M             // aka 0 if not pressed, -1 if pressed
@@ -75,12 +79,12 @@ M=D
 @fill_value    // Load caracter to print
 D=M  
 @addr          // Write fill_value to RAM[addr]
-M=M+1             // Move addr to next batch of 16 pixels (This is too soon but saves op later)
-A=M-1             // Point to the pixels to draw on  (So we have to -1 the pointer)
+M=M+1             // Pre-increment addr to the next pixel
+A=M-1             // But actually point at the current one
 M=D               // and print on screen
-@counter              // counter -= 1
+@counter       // counter -= 1
 MD=M-1
 @LOOP         // If counter >= 0 -> continue loop
 D;JGE
-@MAIN             // Return to inifite loop
+@MAIN             // Return to main loop
 0;JMP

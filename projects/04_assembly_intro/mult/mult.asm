@@ -3,10 +3,11 @@
 // by Nisan and Schocken, MIT Press.
 // File name: projects/04/Mult.asm
 
+// See https://www.nand2tetris.org/course, project 4 for the hack machine
+// langage and assembler specifications
+
 // Multiplies R0 and R1 and stores the result in R2.
 // (R0, R1, R2 refer to RAM[0], RAM[1], and RAM[2], respectively.)
-
-// Put your code here.
 
 // R0 * R1 <=> add R0 to 0, R1 times
 (INIT)   // Start
