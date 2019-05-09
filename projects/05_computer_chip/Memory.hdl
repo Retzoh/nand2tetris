@@ -20,6 +20,23 @@
  * map. Access to address 0x6000 results in accessing the keyboard 
  * memory map. The behavior in these addresses is described in the 
  * Screen and Keyboard chip specifications given in the book.
+ * 
+ * Implementation details: 
+ *
+ * i k s.xxxx.xxxx.xxxx
+ * ^ ^ ^ ^^^^ ^^^^ ^^^^
+ * | | | Part of data/screen address
+ * | | | ---------------------------
+ * | | Upper/lower part switch of screen map (2*RAM4K) or part of data address
+ * | | -----------------------------------------------------------------------
+ * | Screen / keyboard switch (0->screen, 1->keyboard) or part of data address
+ * | -------------------------------------------------------------------------
+ * Data / IO switch (0->data, 1->IO a.k.a. keyboard-screen)
+ *
+ * Yields the following behavior:
+ * 0->0x3FFF: Data (16K)
+ * 0x4000->0x5FFF: screen (2*4K)
+ * 0x6000->0x7FFF: always access the keyboard register (16 bits)
  */
 
 CHIP Memory {
@@ -36,9 +53,12 @@ CHIP Memory {
     DMux(in=sel-screen, sel=address[12], a=sel-screen-low, b=sel-screen-high);
     And(a=load, b=sel-screen-low, out=load-screen-low);
     And(a=load, b=sel-screen-high, out=load-screen-high);
-    RAM4K(in=in, load=load-screen-low, address=address[0..11], out=screen-out-low);
-    RAM4K(in=in, load=load-screen-high, address=address[0..11], out=screen-out-high);
-    Mux16(a=screen-out-low, b=screen-out-high, sel=sel-screen-high, out=screen-out);
+    RAM4K(in=in, load=load-screen-low, address=address[0..11], 
+        out=screen-out-low);
+    RAM4K(in=in, load=load-screen-high, address=address[0..11], 
+        out=screen-out-high);
+    Mux16(a=screen-out-low, b=screen-out-high, sel=sel-screen-high, 
+        out=screen-out);
     // Keyboard
     And(a=load, b=sel-keyboard, out=load-keyboard);
     Register(in=in, load=load-keyboard, out=keyboard-out);

@@ -23,6 +23,29 @@
  * to their new values only in the next time step. If reset==1 then the 
  * CPU jumps to address 0 (i.e. pc is set to 0 in next time step) rather 
  * than to the address resulting from executing the current instruction. 
+ *
+ * # Binary instruction format
+ * A instructions (RAM adress management):
+ *
+ * 0 xxx.xxxx.xxxx.xxxx
+ * ^ ^^^ ^^^^ ^^^^ ^^^^
+ * | 15 bit Memory address
+ * | ---------------------
+ * A-instruction marker
+ *
+ * C instructions (ALU computations):
+ *
+ * 1 xx a.ffff.ff AD.M LEG
+ * ^    | ^^^^ ^^ ^^ ^ ^^^
+ * |    | |||| || || | Jump conditions: output lower/equal/greter than 0
+ * |    | |||| || || | ---------------
+ * |    | |||| || Output destination: ADM
+ * |    | |||| || ------------------
+ * |    | ALU op-code
+ * |    | -----------
+ * |    A/M register choice (0 -> A, 1 -> M)
+ * |    -------------------
+ * C-instruction marker
  */
 
 CHIP CPU {
@@ -39,13 +62,19 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    Mux16(a=instruction, b=alu-out, sel=instruction[15], out=a-in);// A input
-    Not(in=instruction[15], out=is-a-instruction);                  // is a-instruction...
-    Or(a=is-a-instruction, b=instruction[5], out=load-a);           // ...or dest=A (c-instruction is implicit)
-    Register(in=a-in, load=load-a, out=a, out[0..14]=addressM);   // A register && addressM
-    And(a=instruction[15], b=instruction[4], out=load-d);         // load-d
-    Register(in=alu-out, load=load-d, out=d);             // D register
-    Mux16(a=a, b=inM, sel=instruction[12], out=a-m);              // A/M choice
+    Mux16(a=instruction, b=alu-out, sel=instruction[15], out=a-in); // A input
+    // Load A register (should be c-instruction)
+    Not(in=instruction[15], out=is-a-instruction); // is A-instruction...
+    Or(a=is-a-instruction, b=instruction[5], out=load-a); // ...or dest=A 
+    // A register 
+    Register(in=a-in, load=load-a, out=a, out[0..14]=addressM); 
+    // Load D Register (should be c-instruction)
+    And(a=instruction[15], b=instruction[4], out=load-d);
+    // D register
+    Register(in=alu-out, load=load-d, out=d);
+    // A/M choice as input for the ALU
+    Mux16(a=a, b=inM, sel=instruction[12], out=a-m);          
+    // ALU
     ALU(x=d, y=a-m, 
         zx=instruction[11],
         nx=instruction[10],
@@ -53,15 +82,21 @@ CHIP CPU {
         ny=instruction[8], 
         f=instruction[7], 
         no=instruction[6], 
-        out=alu-out, out=outM, zr=zr, ng=ng);                      // ALU && outM
-    And(a=instruction[15], b=instruction[3], out=writeM);          // WriteM
-    And(a=ng, b=instruction[2], out=jlt);                          // JLT.lt
-    And(a=zr, b=instruction[1], out=jeq);                          // JEQ.eq
-    Or(a=jlt, b=jeq, out=j-n-e);                                   // (JEQ.eq)+(JLT.lt) (+ JLE.le)
+        out=alu-out, out=outM, zr=zr, ng=ng);
+    // WriteM (should be c-instruction)
+    And(a=instruction[15], b=instruction[3], out=writeM);
+    // Jump if lower than 0
+    And(a=ng, b=instruction[2], out=jlt);
+    // Jump if equal to 0
+    And(a=zr, b=instruction[1], out=jeq);
+    // Jump if greater than 0: 
     Or(a=ng, b=zr, out=le);
     Not(in=le, out=gt);
-    And(a=gt, b=instruction[0], out=jgt);                          // JGT.GT
-    Or(a=j-n-e, b=jgt, out=jmp-cmd);                                   // (JEQ.eq)+(JLT.lt)+(JGT.GT) -> JMP ?
+    And(a=gt, b=instruction[0], out=jgt);
+    // Final jump instruction (should be c-instruction)
+    Or(a=jlt, b=jeq, out=j-n-e);
+    Or(a=j-n-e, b=jgt, out=jmp-cmd);
     And(a=jmp-cmd, b=instruction[15], out=jmp);
-    PC(in=a, load=jmp, inc=true, reset=reset, out[0..14]=pc); // PC
+    // PC
+    PC(in=a, load=jmp, inc=true, reset=reset, out[0..14]=pc);
 }
